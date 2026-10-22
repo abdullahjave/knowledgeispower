@@ -1,5 +1,5 @@
 {
- "code_commit": "abb317044f3ef623d8344c4b17fb59e06990c5f6",
+ "code_commit": "abce0e517e7623efc6a2bae84eef1c00c25146d2",
  "quick": false,
  "include_contrib": true,
  "normalise": "none",
@@ -26,7 +26,7 @@
   9
  ],
  "n_stability_bootstraps": 20,
- "runtime_seconds": 601.6,
+ "runtime_seconds": 596.8,
  "python": "3.13.16",
  "versions": {
   "numpy": "2.5.4",
