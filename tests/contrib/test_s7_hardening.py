@@ -139,10 +139,6 @@ def test_unicode_h5ad_path_roundtrip(tmp_path, monkeypatch):
     np.testing.assert_array_equal(ad.read_h5ad(path).X, values)
 
 
-@pytest.mark.xfail(
-    reason="Exposes core bug in methods.propagate(): ZeroDivisionError on 0-node graph when scores are empty. Flagged for Amit's core fix.",
-    strict=True,
-)
 def test_zero_node_propagation_is_empty():
     result = methods.propagate(nx.Graph(), {})
     assert result.shape == (0,)

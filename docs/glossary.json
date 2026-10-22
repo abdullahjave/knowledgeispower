@@ -212,7 +212,7 @@
     "category": "databases",
     "who": "Built by an academic consortium. The 2023 paper is by Szklarczyk and colleagues, with Jensen and von Mering among the senior authors. A 2025 update added direction of regulation.",
     "why": "It gives a score for almost any pair of proteins in thousands of species. That lets people build a protein network even where little has been tested.",
-    "how": "STRING collects many kinds of evidence (see STRING evidence channels). Each channel gives a score between 0 and 1. These are merged into one combined score and stored as score \u00d7 1000, so 700 means 0.7 ('high confidence').",
+    "how": "STRING collects many kinds of evidence (see STRING evidence channels). Each channel gives a score between 0 and 1. These are merged into one combined score and stored as score × 1000, so 700 means 0.7 ('high confidence').",
     "what": "Our generic PPI baseline. We built two graphs: 'string' uses the combined score of 700 or more, and 'string_exp' uses only the experimental channel at 700 or more. The combined score already contains curated complex data, so string_exp is the cleaner comparison.",
     "example": "PSMB5 and PSMB6 have a very high STRING score because they sit side by side in the proteasome.",
     "links": [
@@ -255,7 +255,7 @@
     "category": "databases",
     "who": "Defined by the STRING team; listed in the STRING FAQ.",
     "why": "Different clues about two proteins mean very different things. Being in the same experiment is not the same as being named in the same sentence of a paper.",
-    "how": "The STRING FAQ lists: neighborhood (genes sit near each other in bacterial genomes), fusion (the two genes are joined into one in some species), co-occurrence (the genes are present or absent together across species), co-expression (their mRNA levels move together), experiments (lab data such as affinity purification), databases (curated sources such as pathway and complex databases), and textmining (names appear together in abstracts). To combine them, a small 'random pair' chance p = 0.041 is removed from each score. Then combined = 1 \u2212 product of (1 \u2212 score) over all channels, and p is added back once.",
+    "how": "The STRING FAQ lists: neighborhood (genes sit near each other in bacterial genomes), fusion (the two genes are joined into one in some species), co-occurrence (the genes are present or absent together across species), co-expression (their mRNA levels move together), experiments (lab data such as affinity purification), databases (curated sources such as pathway and complex databases), and textmining (names appear together in abstracts). To combine them, a small 'random pair' chance p = 0.041 is removed from each score. Then combined = 1 − product of (1 − score) over all channels, and p is added back once.",
     "what": "Explains why STRING-combined is not a clean 'physical binding' prior. It mixes co-expression and curated complex data. So we also test the experiments channel alone (string_exp).",
     "example": "A pair with experiments 0.621 and textmining 0.585 gets a combined score higher than either, because two independent clues agree.",
     "links": [
@@ -448,7 +448,7 @@
     "why": "DDA picks only the brightest peptides to break, so it misses many at random. DIA breaks everything, which gives fewer random gaps between cells.",
     "how": "The instrument steps through a series of m/z windows (for example 2 to 20 m/z wide). It breaks all peptides in each window at once and records every fragment. Software later untangles these mixed spectra, often by matching them to a library of known peptides and their elution times.",
     "what": "The acquisition mode behind our 215-cell AML dataset. Even with DIA, 40.7% of values are missing, mostly because faint proteins fall below the detection limit (MNAR).",
-    "example": "One cycle might cover m/z 400\u2013800 in 100 windows, then repeat every second or so as peptides come off the column.",
+    "example": "One cycle might cover m/z 400–800 in 100 windows, then repeat every second or so as peptides come off the column.",
     "links": [
       {
         "label": "Wikipedia: Data-independent acquisition",
@@ -506,7 +506,7 @@
     "who": "A fast-growing field. Petrosius, Schoof and colleagues produced our dataset. Earlier multiplexed work included SCoPE-MS (2018).",
     "why": "Cells in one tissue or tumour differ. Averaging over millions of cells hides rare cell states, such as leukemia stem cells.",
     "how": "Single cells are sorted into tiny wells. They are broken open and digested with trypsin in very small volumes so little is lost. Then they are measured by very sensitive mass spectrometry. A single cell holds only tiny amounts of protein, so many proteins are seen in some cells and not others.",
-    "what": "Our setting: 215 OCI-AML8227 cells \u00d7 2813 protein groups, sorted into 4 populations (LSC, prog, CD38_pos, CD38_neg).",
+    "what": "Our setting: 215 OCI-AML8227 cells × 2813 protein groups, sorted into 4 populations (LSC, prog, CD38_pos, CD38_neg).",
     "example": "A protein seen in 120 of 215 cells has 95 missing values that a method must fill or ignore.",
     "links": [
       {
@@ -605,7 +605,7 @@
     "who": "Part of Rubin's (1976) missing-data framework. It is the usual worry in proteomics.",
     "why": "It is the hard case. The missing values are systematically different (usually lower), so naive filling is biased.",
     "how": "A value is MNAR when the chance it is missing depends on the hidden value itself. In mass spectrometry, faint peptides drop below the detection limit, so low-abundance proteins go missing more often.",
-    "what": "Our second mask. Each observed entry is hidden with a weight logistic((q25 \u2212 x)/(0.5\u00b7\u03c3)), so values below the protein's 25th percentile are much more likely to be hidden.",
+    "what": "Our second mask. Each observed entry is hidden with a weight logistic((q25 − x)/(0.5·σ)), so values below the protein's 25th percentile are much more likely to be hidden.",
     "example": "A protein at log2 intensity 10 when its usual level is 14 is far more likely to be missing than one at 16.",
     "links": [
       {
@@ -638,7 +638,7 @@
     "who": "Standard practice across proteomics and genomics.",
     "why": "Raw intensities range from hundreds to billions and errors grow with size. Taking log2 makes doubling an equal step everywhere and makes the spread more even.",
     "how": "log2(x) asks 'how many times do I double 1 to get x?' So log2(1024) = 10 and log2(2048) = 11. A difference of 1 on this scale means 2-fold; 3 means 8-fold. Means and z-scores are computed on these log values.",
-    "what": "All our data, imputations and errors (RMSE) are on the log2 scale. An RMSE of 0.7 means a typical error of about 2^0.7 \u2248 1.6-fold.",
+    "what": "All our data, imputations and errors (RMSE) are on the log2 scale. An RMSE of 0.7 means a typical error of about 2^0.7 ≈ 1.6-fold.",
     "example": "A protein at intensity 65,536 has log2 intensity 16.",
     "links": [
       {
@@ -664,7 +664,7 @@
     "category": "methods",
     "who": "Python package from the scverse community; preprint by Virshup, Rybakov, Theis, Angerer and Wolf (2021).",
     "why": "Single-cell data has a big number table plus labels for rows and columns. AnnData keeps them together so they never get out of sync.",
-    "how": "An AnnData object holds X (cells \u00d7 features matrix), obs (a table about each cell, like its population), var (a table about each feature, like UniProt IDs), and extra layers of the same shape. It saves to an .h5ad file.",
+    "how": "An AnnData object holds X (cells × features matrix), obs (a table about each cell, like its population), var (a table about each feature, like UniProt IDs), and extra layers of the same shape. It saves to an .h5ad file.",
     "what": "Our tools read and write .h5ad. impute_with_prior adds a layer 'imputed_by_prior' that marks which entries came from the graph rather than the kNN fallback.",
     "example": "adata.X[5, 100] is cell 5's log2 value for protein 100; adata.obs['population'][5] might be 'LSC'.",
     "links": [
@@ -697,7 +697,7 @@
     "why": "It turns facts like 'A and B are in the same complex' into something an algorithm can use.",
     "how": "A graph has nodes (here, proteins keyed by UniProt accession) and edges (a relation between two nodes). Edges can carry weights. We store it as a weighted adjacency matrix: entry (i, j) is the edge weight, or 0 if there is no edge.",
     "what": "build_prior turns CORUM, Complex Portal or STRING into a weighted graph over the proteins in a dataset. Every method here (imputation, propagation, panel design) runs on that graph.",
-    "example": "PSMB5 \u2013(weight 3)\u2013 PSMB6 if they share 3 curated complexes.",
+    "example": "PSMB5 –(weight 3)– PSMB6 if they share 3 curated complexes.",
     "links": [
       {
         "label": "Wikipedia: Knowledge graph",
@@ -753,11 +753,11 @@
       "personalized PageRank"
     ],
     "category": "methods",
-    "who": "Studied in computer science by Tong, Faloutsos and Pan (2006). Applied to protein networks by K\u00f6hler and colleagues (2008) to rank disease genes. It is closely related to PageRank.",
+    "who": "Studied in computer science by Tong, Faloutsos and Pan (2006). Applied to protein networks by Köhler and colleagues (2008) to rank disease genes. It is closely related to PageRank.",
     "why": "It gives a 'closeness to the start' score that uses all paths through the graph, not just direct neighbours.",
-    "how": "Picture a walker on the graph. At each step, with chance \u03b1 it jumps back to the start (the seed scores). Otherwise it moves along a random edge, choosing heavier edges more often. In maths, p_next = (1 \u2212 \u03b1)\u00b7W\u00b7p + \u03b1\u00b7p0, where W is the column-normalised edge-weight matrix. Repeat until p stops changing. So it is repeated averaging over neighbours with a constant pull back to the start.",
-    "what": "Our soft_weight panel mode seeds the walk with each protein's variance and uses \u03b1 = 0.5. Nodes with no edges keep their mass. We then take the top-k candidates.",
-    "example": "With \u03b1 = 0.5, half of every node's final score comes from its own seed and half from what flowed in from neighbours.",
+    "how": "Picture a walker on the graph. At each step, with chance α it jumps back to the start (the seed scores). Otherwise it moves along a random edge, choosing heavier edges more often. In maths, p_next = (1 − α)·W·p + α·p0, where W is the column-normalised edge-weight matrix. Repeat until p stops changing. So it is repeated averaging over neighbours with a constant pull back to the start.",
+    "what": "Our soft_weight panel mode seeds the walk with each protein's variance and uses α = 0.5. Nodes with no edges keep their mass. We then take the top-k candidates.",
+    "example": "With α = 0.5, half of every node's final score comes from its own seed and half from what flowed in from neighbours.",
     "links": [
       {
         "label": "Tong, Faloutsos & Pan 2006: Fast Random Walk with Restart",
@@ -765,7 +765,7 @@
         "checked": "Crossref 200 on 2026-10-21"
       },
       {
-        "label": "K\u00f6hler et al. 2008: Walking the Interactome",
+        "label": "Köhler et al. 2008: Walking the Interactome",
         "url": "https://doi.org/10.1016/j.ajhg.2008.02.013",
         "checked": "Crossref 200 on 2026-10-21"
       },
@@ -797,8 +797,8 @@
     "category": "methods",
     "who": "Popularised for protein networks by Maslov and Sneppen (2002, Science).",
     "why": "Some proteins have many edges just because they are well studied or abundant. A good null keeps that and scrambles only who connects to whom.",
-    "how": "Pick two edges A\u2013B and C\u2013D at random and swap their ends to get A\u2013D and C\u2013B. Skip the swap if it would make a self-loop or a duplicate edge. Every node keeps the same number of edges (its degree), but the specific partners change. Repeat many times.",
-    "what": "Our null graphs. Each prior gets 10 shuffles (seeds 0\u20139) with 10\u00d7|E| swaps, and the edge weights are permuted onto the new edges.",
+    "how": "Pick two edges A–B and C–D at random and swap their ends to get A–D and C–B. Skip the swap if it would make a self-loop or a duplicate edge. Every node keeps the same number of edges (its degree), but the specific partners change. Repeat many times.",
+    "what": "Our null graphs. Each prior gets 10 shuffles (seeds 0–9) with 10×|E| swaps, and the edge weights are permuted onto the new edges.",
     "example": "If PSMB5 had 30 partners, after shuffling it still has 30, but they are mostly random proteins.",
     "links": [
       {
@@ -833,9 +833,9 @@
     "category": "methods",
     "who": "A standard statistical tool across many fields.",
     "why": "Many analyses need a complete table. Imputation fills gaps with a best guess instead of throwing away whole cells or proteins.",
-    "how": "Use what is known to predict what is missing. Simple methods use the column mean. Smarter ones borrow from similar cells (kNN imputation) or related proteins (our prior method). Our prior method works in z-scores: for protein j, z = (x \u2212 \u03bc_j)/\u03c3_j. A missing z is predicted as \u03b2 \u00d7 the edge-weighted mean of its observed partners' z in that cell. Then x\u0302 = \u03bc_j + \u03c3_j\u00b7\u03b2\u00b7\u1e91. If no partner is observed, it falls back to kNN.",
+    "how": "Use what is known to predict what is missing. Simple methods use the column mean. Smarter ones borrow from similar cells (kNN imputation) or related proteins (our prior method). Our prior method works in z-scores: for protein j, z = (x − μ_j)/σ_j. A missing z is predicted as β × the edge-weighted mean of its observed partners' z in that cell. Then x̂ = μ_j + σ_j·β·ẑ. If no partner is observed, it falls back to kNN.",
     "what": "The headline test. We mask known values (MCAR and MNAR), impute them, and compare RMSE in the in-complex stratum.",
-    "example": "If PSMB5 is missing in a cell where its partners sit 1 SD above their averages and \u03b2 = 0.6, the guess is \u03bc + 0.6\u03c3.",
+    "example": "If PSMB5 is missing in a cell where its partners sit 1 SD above their averages and β = 0.6, the guess is μ + 0.6σ.",
     "links": [
       {
         "label": "Wikipedia: Imputation (statistics)",
@@ -904,9 +904,9 @@
     "category": "methods",
     "who": "A common goal in targeted assays (antibody panels, targeted mass spectrometry).",
     "why": "Measuring a few proteins well is cheaper and more sensitive than measuring thousands. A good panel lets you predict the rest.",
-    "how": "Choose k proteins (the panel). Fit a model (here ridge regression) that predicts every other protein from the panel. Score it on held-out cells with R\u00b2. Methods differ in how the k are picked: highest variance (HVP), random, or variance scores propagated over the graph by random walk with restart.",
-    "what": "Test 2. For k = 25, 50 and 100, complex-propagated panels lost to HVP, and random panels beat every scored panel at k = 25 and 50 (R\u00b2 0.419 at k = 50).",
-    "example": "A 50-protein panel that explains on average 19% of the variance (R\u00b2 0.19) of the other proteins.",
+    "how": "Choose k proteins (the panel). Fit a model (here ridge regression) that predicts every other protein from the panel. Score it on held-out cells with R². Methods differ in how the k are picked: highest variance (HVP), random, or variance scores propagated over the graph by random walk with restart.",
+    "what": "Test 2. For k = 25, 50 and 100, complex-propagated panels lost to HVP, and random panels beat every scored panel at k = 25 and 50 (R² 0.419 at k = 50).",
+    "example": "A 50-protein panel that explains on average 19% of the variance (R² 0.19) of the other proteins.",
     "links": [
       {
         "label": "Wikipedia: Feature selection",
@@ -916,7 +916,7 @@
     ],
     "related": [
       "ridge regression",
-      "R\u00b2",
+      "R²",
       "random walk with restart",
       "Jaccard index",
       "macro-F1"
@@ -932,9 +932,9 @@
     "category": "methods",
     "who": "Described for statistics by Hoerl and Kennard (1970, Technometrics). Wikipedia notes it is also called Tikhonov regularization, after Andrey Tikhonov.",
     "why": "With many correlated inputs, plain linear regression gives wild, unstable weights. Ridge keeps them small and steady.",
-    "how": "Find weights w that minimise (prediction errors)\u00b2 + \u03b1 \u00d7 (sum of w\u00b2). The second term is a penalty that pulls weights toward zero. Correlated features end up sharing the credit instead of fighting.",
-    "what": "The model in Test 2: \u03b1 = 1.0, standardised panel features, 5-fold cross-validation over cells.",
-    "example": "If PSMB5 and PSMB6 carry the same information, ridge gives each about half the weight instead of +100 and \u221299.",
+    "how": "Find weights w that minimise (prediction errors)² + α × (sum of w²). The second term is a penalty that pulls weights toward zero. Correlated features end up sharing the credit instead of fighting.",
+    "what": "The model in Test 2: α = 1.0, standardised panel features, 5-fold cross-validation over cells.",
+    "example": "If PSMB5 and PSMB6 carry the same information, ridge gives each about half the weight instead of +100 and −99.",
     "links": [
       {
         "label": "Wikipedia: Ridge regression",
@@ -954,12 +954,12 @@
     ],
     "related": [
       "panel design",
-      "R\u00b2"
+      "R²"
     ],
     "link_check": "Web URLs fetched with curl -L and returned HTTP 200. DOIs were checked at https://api.crossref.org/works/<DOI> (HTTP 200, title matched); doi.org itself forwards to publisher pages that often block scripts, so those were not used as the check."
   },
   {
-    "term": "R\u00b2",
+    "term": "R²",
     "aka": [
       "R-squared",
       "coefficient of determination"
@@ -967,9 +967,9 @@
     "category": "methods",
     "who": "Wikipedia attributes it to the geneticist Sewall Wright, first published in 1921.",
     "why": "It answers 'how much of the up-and-down is my model explaining?' on a 0-to-1 scale.",
-    "how": "R\u00b2 = 1 \u2212 (sum of squared errors) / (sum of squared distances from the mean). 1 is perfect. 0 is no better than always guessing the average. On new data it can even be negative.",
-    "what": "The Test 2 score: R\u00b2 per target protein on held-out cells, observed entries only, then averaged over targets.",
-    "example": "Errors adding up to 30 when guessing the mean gives 100 means R\u00b2 = 0.7.",
+    "how": "R² = 1 − (sum of squared errors) / (sum of squared distances from the mean). 1 is perfect. 0 is no better than always guessing the average. On new data it can even be negative.",
+    "what": "The Test 2 score: R² per target protein on held-out cells, observed entries only, then averaged over targets.",
+    "example": "Errors adding up to 30 when guessing the mean gives 100 means R² = 0.7.",
     "links": [
       {
         "label": "Wikipedia: Coefficient of determination",
@@ -994,7 +994,7 @@
     "why": "One number for 'how far off, typically', in the same units as the data.",
     "how": "Take each prediction error, square it (so negatives don't cancel and big misses count more), average them, then take the square root.",
     "what": "Test 1's score on masked entries, on the log2 scale. For example, in-complex MCAR: Complex Portal 0.730 vs kNN 0.687.",
-    "example": "Errors of 1, \u22121, 2 and 0 give \u221a((1+1+4+0)/4) \u2248 1.22.",
+    "example": "Errors of 1, −1, 2 and 0 give √((1+1+4+0)/4) ≈ 1.22.",
     "links": [
       {
         "label": "Wikipedia: Root mean square deviation",
@@ -1006,7 +1006,7 @@
       "imputation",
       "log2 intensity",
       "bootstrap",
-      "R\u00b2"
+      "R²"
     ],
     "link_check": "Every URL fetched with curl -L on 2026-10-21 and returned HTTP 200."
   },
@@ -1047,7 +1047,7 @@
     "why": "It tells you how much a result might wobble if you had collected the data again, without collecting new data.",
     "how": "Make a new dataset of the same size by drawing items from your data at random with replacement (some appear twice, some not at all). Recompute the statistic. Do this hundreds or thousands of times. The spread of answers gives an uncertainty range, such as a 95% confidence interval.",
     "what": "Used twice. (1) Paired bootstrap with 1000 resamples of masked entries for the RMSE difference CIs in Test 1. (2) 20 resamples of cells for panel stability in Test 3.",
-    "example": "\u0394 RMSE vs kNN = +0.043 [+0.037, +0.048]: the 95% interval excludes 0, so kNN is reliably better.",
+    "example": "Δ RMSE vs kNN = +0.043 [+0.037, +0.048]: the 95% interval excludes 0, so kNN is reliably better.",
     "links": [
       {
         "label": "Wikipedia: Bootstrapping (statistics)",
@@ -1075,7 +1075,7 @@
     "category": "methods",
     "who": "A standard machine-learning metric. scikit-learn implements it as f1_score(average='macro').",
     "why": "Plain accuracy can look good by always guessing the biggest class. Macro-F1 makes each class count equally.",
-    "how": "For each class: precision = correct guesses of that class / all guesses of it; recall = correct / all true members; F1 = 2\u00b7P\u00b7R/(P + R). Macro-F1 is the plain average of the per-class F1 scores.",
+    "how": "For each class: precision = correct guesses of that class / all guesses of it; recall = correct / all true members; F1 = 2·P·R/(P + R). Macro-F1 is the plain average of the per-class F1 scores.",
     "what": "Sanity check only: logistic regression on a 50-protein panel to tell the 4 sorted populations apart. HVP 0.787, random 0.767, Complex Portal 0.768, all proteins 0.865.",
     "example": "Class F1s of 0.9, 0.8, 0.7 and 0.6 give macro-F1 = 0.75.",
     "links": [
@@ -1130,7 +1130,7 @@
     "who": "Promoted widely by groups such as the Center for Open Science.",
     "why": "If you choose tests after seeing results, it is easy to fool yourself. Writing the plan first keeps the test honest.",
     "how": "Before running the analysis, write down the claim, data, methods, metrics, and pass/fail rules (including a minimum meaningful effect size), and timestamp it (here, a git commit). Afterwards, report every result, and list any change to the plan as a \"deviation\" with a reason.",
-    "what": "benchmarks/PREREGISTRATION.md and PREREGISTRATION_v2.md were committed before benchmarks ran. We committed to a 1% minimum effect size (SESOI) and held-out confirmation seeds before looking at the data, keeping the negative result honest.",
+    "what": "benchmarks/PREREGISTRATION.md and later versions were committed before the runs they cover. A 1% smallest effect size of interest (SESOI) was added from PREREGISTRATION_v5.md on, after v3 showed why it is needed.",
     "example": "Writing \"pass = 95% CI of the RMSE difference excludes 0 and beats baseline by at least 1%\" before seeing any numbers.",
     "links": [
       {
@@ -1223,7 +1223,7 @@
     "category": "concepts",
     "who": "A term from Bayesian statistics, used loosely in machine learning for 'what we assume before seeing the data'.",
     "why": "Data from single cells is sparse and noisy. Outside knowledge can fill in where data is thin, if that knowledge is right for the job.",
-    "how": "In Bayesian terms, a prior is a probability you hold before the evidence, which data then updates. Here it is looser: a graph that says which proteins should behave alike. The fitted \u03b2 sets how much each graph is trusted.",
+    "how": "In Bayesian terms, a prior is a probability you hold before the evidence, which data then updates. Here it is looser: a graph that says which proteins should behave alike. The fitted β sets how much each graph is trusted.",
     "what": "We compare four priors (corum, complexportal, string, string_exp), plus shuffled nulls, against data-only methods (kNN, mean).",
     "example": "Assuming PSMB5 tracks other proteasome subunits is a complex prior.",
     "links": [
@@ -1682,9 +1682,9 @@
     "example": "Imagine trying to understand human vocabulary by reading essays from only five high school students. A reference panel is like consulting a library of 10,000 books from around the world to learn which words naturally appear together before scoring a new student's essay.",
     "links": [
       {
-        "label": "Luecken et al. 2022: Benchmarking atlas-level data integration in single-cell genomics",
-        "url": "https://doi.org/10.1038/s41587-021-00895-7",
-        "checked": "Verified: article page loads"
+        "label": "Luecken et al. 2022 (Nature Methods): Benchmarking atlas-level data integration in single-cell genomics",
+        "url": "https://doi.org/10.1038/s41592-021-01336-8",
+        "checked": "Crossref title match, 2026-10-22"
       }
     ],
     "related": [
@@ -1706,7 +1706,7 @@
     "who": "Used by machine learning engineers and bioinformaticians to transfer representations learned on large reference panels to smaller target datasets.",
     "why": "Training a complex model directly on a small experiment with missing data often causes overfitting. Reference projection learns robust low-dimensional patterns (such as principal components or latent factors) on a large reference panel, and then maps new cells into that established coordinate space to infer their missing values.",
     "how": "Researchers compute the major axes of variation (protein loadings or dictionary weights) across the reference panel. When a new single cell is measured with missing proteins, its observed values are projected onto those reference axes, and the reconstructed coordinates predict what the missing proteins should be based on how they co-vary in the reference.",
-    "what": "In scp-graphfs, transfer via reference projection gave a +1.4% improvement over standard kNN imputation on the untouched holdout dataset (Khan 2023), proving that cross-study protein co-variation carries real biological signal.",
+    "what": "In scp-graphfs, reference projection stacked with kNN and low-rank was preregistered as H14 and confirmed on the untouched brunner2022 holdout: 2.4-5.4% lower in-complex RMSE than the best data-only method and 2.5-4.3% lower than a scrambled reference. On the earlier khan2023 holdout the gain was smaller (below the 1% bar), so it replicates on 1 of 2 holdouts.",
     "example": "Like projecting a blurry shadow of an object onto a 3D reference model of human anatomy: knowing the general 3D shape allows you to reconstruct the parts hidden in the shadow.",
     "links": [
       {
@@ -1732,9 +1732,9 @@
     ],
     "category": "methods",
     "who": "Used by experimental scientists and benchmark designers to prevent data leakage and confirmation bias during exploratory research.",
-    "why": "If researchers repeatedly test candidate models on their final evaluation dataset, they will inevitably overfit to that specific benchmark\u2014even by accident. A post-gate test locks the final holdout dataset or test seeds behind a strict protocol gate: the holdout data is accessed exactly once, only after an exploratory candidate is preregistered and locked.",
-    "how": "The team develops and tunes ideas exclusively on designated development masks and seeds (the \"dev phase\"). Once an idea satisfies a predefined selection rule, researchers freeze the algorithm, write a formal preregistration specifying pass/fail criteria and effect thresholds, and only then run the code on the held-out confirmation data (the \"post-gate test\").",
-    "what": "In scp-graphfs, the Khan 2023 MCF-10A dataset and confirmation seeds 1000\u20131004 were kept completely untouched behind the gate until Amendment 12. Running the post-gate confirmation once revealed that while transfer beat kNN by 1.4%, the knowledge-specific gain fell below the 1% SESOI bar, resulting in an honest negative finding.",
+    "why": "Sometimes no candidate passes the development gate, but a team still wants to know whether its best idea generalises. A post-gate test spends a held-out dataset on that best candidate anyway, and labels the result as post-gate so readers know it did not pass the team's own dev rule.",
+    "how": "Write down the candidate, the pass/fail rule and the effect-size threshold, commit it, then run the held-out data exactly once. Report the result whatever it is, together with the fact that the candidate failed the dev gate.",
+    "what": "In scp-graphfs, Amendment 12 spent the khan2023 holdout (seeds 6000-6009) on the best transfer stack after it failed the dev gate. It beat kNN by 1.4% (MCAR) but missed the 1% bar against the kNN + low-rank stack and its permuted-reference null, so it was reported as not confirmed.",
     "example": "Like keeping the final exam sealed in an envelope in the principal's safe: students and teachers can practice on sample questions all semester, but the exam can only be opened once on test day.",
     "links": [
       {

@@ -8,6 +8,19 @@
 
 ## 2. Headline result
 
+> **Update, Oct 22 (final).** Our preregistered refined hypothesis **H14 was confirmed (6/6) on an untouched holdout**
+> (Brunner 2022, HeLa, timsTOF DIA, 30-cell subsamples).
+> - **What H14 tests:** an *empirical biological prior* (protein co-regulation learned from 16 public single-cell datasets
+>   + CCLE + ProteomeHD) stacked with kNN and low-rank.
+> - **Result on complex-member proteins:** 2.4–5.4% lower RMSE than the best data-only method (kNN + low-rank), 6–9% lower
+>   than kNN, and 2.5–4.3% lower than the same pipeline with a scrambled reference.
+> - **Caveats:**
+>   - Curated complexes are the best of 22 knowledge priors, but they add nothing measurable on top of the empirical prior.
+>   - On a second holdout (Khan 2023) the gain was below the 1% bar, so the result replicates on 1 of 2 holdouts.
+> - Full record: `docs/EXPLORATION_LOG.md` (Amendments 9–14), `results/confirm_v7/`.
+>
+> The original phase-1 headline follows.
+
 <!-- HEADLINE:START -->
 Dataset: 215 cells × 2813 protein groups, 40.7% missing; 1545 proteins are in ≥1 curated complex. 5 seeds × 2 masks, 10% of observed values masked; 10 shuffled nulls per prior; 95% paired-bootstrap CIs. Run: `7626455`, 567 s.
 

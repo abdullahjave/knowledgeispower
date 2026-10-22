@@ -134,6 +134,8 @@ def propagate(graph: nx.Graph, scores: dict | np.ndarray, var_names=None, alpha:
         s = np.asarray(scores, dtype=float)
     if (s < 0).any() or not np.isfinite(s).all():
         raise ValueError("scores must be finite and non-negative")
+    if len(s) == 0:  # empty graph: nothing to propagate (found by S7 hardening, PR #10)
+        return np.empty(0, dtype=float)
     s = s / s.sum() if s.sum() > 0 else np.full(len(s), 1 / len(s))
     A = adjacency(graph, names)
     deg = np.asarray(A.sum(axis=0)).ravel()
