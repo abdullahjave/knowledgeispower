@@ -68,7 +68,8 @@ Everything from identical-rule removal to the final filter is `EvaluateRules` fr
 in-complex / not-in-complex strata), plus the panels themselves under `panels`.
 
 Run committed with this slot (`results/contrib/`, Petrosius 2023, 1007 candidates, 506,521 rules,
-code commit `abce0e5`, NIFty commit `da3db09`), "all" stratum, panel R²:
+NIFty commit `da3db09`), "all" stratum, panel R². `run_meta.json` names commit `abce0e5`; commit
+metadata was edited afterwards, and the identical files are commit `60b0796` on this branch:
 
 | k | nifty | hvp | random (mean of 10) | complexportal | complexportal null (mean of 10) | string_exp |
 |---|---|---|---|---|---|---|
