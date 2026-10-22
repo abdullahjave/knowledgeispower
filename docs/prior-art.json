@@ -488,5 +488,33 @@
   "what_it_does": "Perspective: biological functions arise from protein interactions reflected in natural proteome variation across single cells, which SCP may decode.",
   "differentiation": "Conceptual framing for our hypothesis; it makes no method or benchmark claim.",
   "unverified_note": ""
+ },
+ {
+  "id": "Sonnett2025",
+  "title": "Using regularized regression and biological covariation to impute missing values in quantitative proteomics",
+  "authors": "Sonnett M, Peshkin L, Kirschner MW",
+  "venue": "bioRxiv",
+  "year": "2025",
+  "doi_or_url": "https://doi.org/10.1101/2025.10.27.684979",
+  "verified": true,
+  "verified_via": "Valency MCP Bond (semantic_search_papers / search_by_title, 2026-10-22); https://api.crossref.org/works/10.1101/2025.10.27.684979",
+  "class": "Direct overlap",
+  "what_it_does": "Imputes relative protein abundance from other proteins in the dataset via regularized regression, exploiting biological covariation. Reports median R2 0.55-0.8 across eight datasets and modalities (TMT, DIA, LFQ, phospho); the important coefficients often mirror known biology.",
+  "differentiation": "Same core intuition as our within-dataset covariation estimators (RPR), but for bulk/multiplexed proteomics. Our negative finding (within-target covariation does not beat kNN at 30 single cells) and our positive one (covariation borrowed from external references) address the single-cell small-n regime that they do not test.",
+  "unverified_note": ""
+ },
+ {
+  "id": "omicsGMF",
+  "title": "omicsGMF: a multi-tool for dimensionality reduction, batch correction and imputation in bulk- and single-cell proteomics",
+  "authors": "Segers A, Castiglione C, Vanderaa C, Martens L, Risso D, Clement L",
+  "venue": "Nature Communications 17",
+  "year": "2026",
+  "doi_or_url": "https://doi.org/10.1038/s41467-026-73402-8",
+  "verified": true,
+  "verified_via": "Valency MCP Bond (semantic_search_papers / search_by_title, 2026-10-22); https://api.crossref.org/works/10.1038/s41467-026-73402-8",
+  "class": "Adjacent",
+  "what_it_does": "Generalized matrix factorization for dimensionality reduction, batch correction and imputation in bulk and single-cell proteomics.",
+  "differentiation": "A stronger within-dataset low-rank baseline than our `grmf`; it is not part of our benchmark. Future comparisons should include it.",
+  "unverified_note": "Abstract not read in this session."
  }
 ]

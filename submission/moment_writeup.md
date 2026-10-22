@@ -41,9 +41,18 @@ biological prior knowledge, served to AI agents as tools, reconstructs missing m
    - Curated complexes add nothing measurable on top of the empirical prior.
    - On a second holdout (Khan 2023) the gain was below our 1% bar, so the result replicates on 1 of 2 holdouts.
 
+**Prior art (checked live with Valency MCP Bond).** A literature sweep through Valency's MCP Bond, run before
+submitting, surfaced the closest work:
+- **Lupine** (Harris & Noble, MCP 2025) already learns imputation from many *bulk* proteomics datasets.
+- **GIRAFI** (bioRxiv 2026) already uses prior-knowledge protein neighbourhoods for single-cell proteomics.
+
+We narrowed our claims accordingly. Our contribution is the **preregistered, null-controlled head-to-head of curated
+vs empirical priors for 30-cell single-cell targets, confirmed on an untouched holdout**. The full trace is in
+`docs/valency_bond_prior_art.md`.
+
 **Why it matters.** Small single-cell experiments can borrow structure from public data, just as genotype imputation
 borrows from reference panels, and agents can do this through standard MCP tools. The benchmark, the nulls and the
 preregistration log give the field a reproducible bar any new "knowledge-guided" imputer has to clear.
 
-**Built with** Claude Code agents and the MCP Python SDK; 14 preregistered amendments; 117 passing tests; contributions
+**Built with** Claude Code agents, the MCP Python SDK and Valency MCP Bond (literature/prior-art agent); 14 preregistered amendments; 117 passing tests; contributions
 from six people through scoped, test-gated slots. Code: https://github.com/xX-its-amit-Xx/knowledgeispower (Apache-2.0).
